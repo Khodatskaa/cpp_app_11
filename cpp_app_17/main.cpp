@@ -2,21 +2,26 @@
 
 using namespace std;
 
-// Function to perform cyclic shifts on rows of the matrix
-void shiftRows(int** matrix, int rows, int cols, int numShifts, string direction) {
-    int** shiftedMatrix = new int* [rows];
-    for (int i = 0; i < rows; i++) {
-        shiftedMatrix[i] = new int[cols];
+void shiftRows(int** matrix, int M, int N, int numShifts, string direction) 
+{
+    int** shiftedMatrix = new int* [M];
+    for (int i = 0; i < M; i++) 
+    {
+        shiftedMatrix[i] = new int[N];
     }
 
-    for (int i = 0; i < rows; i++) {
-        for (int j = 0; j < cols; j++) {
-            if (direction == "left") {
-                int newCol = (j - numShifts + cols) % cols;
+    for (int i = 0; i < M; i++)
+    {
+        for (int j = 0; j < N; j++)
+        {
+            if (direction == "left") 
+            {
+                int newCol = (j - numShifts + N + N) % N;
                 shiftedMatrix[i][newCol] = matrix[i][j];
             }
-            else if (direction == "right") {
-                int newCol = (j + numShifts) % cols;
+            else if (direction == "right") 
+            {
+                int newCol = (j + numShifts) % N;
                 shiftedMatrix[i][newCol] = matrix[i][j];
             }
             else {
@@ -25,57 +30,122 @@ void shiftRows(int** matrix, int rows, int cols, int numShifts, string direction
         }
     }
 
-    // Copy the shifted matrix back to the original matrix
-    for (int i = 0; i < rows; i++) {
-        for (int j = 0; j < cols; j++) {
+    for (int i = 0; i < M; i++) 
+    {
+        for (int j = 0; j < N; j++) 
+        {
             matrix[i][j] = shiftedMatrix[i][j];
         }
     }
 
-    // Deallocate memory for the shifted matrix
-    for (int i = 0; i < rows; i++) {
+    for (int i = 0; i < M; i++) 
+    {
         delete[] shiftedMatrix[i];
     }
     delete[] shiftedMatrix;
 }
 
-int main() {
-    int rows, cols;
-    cout << "Enter the number of rows and columns: ";
-    cin >> rows >> cols;
-
-    int** matrix = new int* [rows];
-    for (int i = 0; i < rows; i++) {
-        matrix[i] = new int[cols];
+void shiftColumns(int** matrix, int M, int N, int numShifts, string direction) 
+{
+    int** shiftedMatrix = new int* [M];
+    for (int i = 0; i < M; i++) 
+    {
+        shiftedMatrix[i] = new int[N];
     }
 
-    cout << "Enter matrix elements row by row:" << endl;
-    for (int i = 0; i < rows; i++) {
-        for (int j = 0; j < cols; j++) {
-            cin >> matrix[i][j];
+    for (int j = 0; j < N; j++)
+    {
+        for (int i = 0; i < M; i++)
+        {
+            if (direction == "up")
+            {
+                int newRow = (i - numShifts + M + M) % M;
+                shiftedMatrix[newRow][j] = matrix[i][j];
+            }
+            else if (direction == "down") 
+            {
+                int newRow = (i + numShifts) % M;
+                shiftedMatrix[newRow][j] = matrix[i][j];
+            }
+            else {
+                shiftedMatrix[i][j] = matrix[i][j];
+            }
         }
     }
+
+    for (int i = 0; i < M; i++) 
+    {
+        for (int j = 0; j < N; j++) 
+        {
+            matrix[i][j] = shiftedMatrix[i][j];
+        }
+    }
+    for (int i = 0; i < M; i++) 
+    {
+        delete[] shiftedMatrix[i];
+    }
+    delete[] shiftedMatrix;
+}
+
+void printMatrix(int** matrix, int M, int N) 
+{
+    for (int i = 0; i < M; i++)
+    {
+        for (int j = 0; j < N; j++)
+        {
+            cout << matrix[i][j] << " ";
+        }
+        cout << endl;
+    }
+}
+
+int main() 
+{
+    int M, N;
+    cout << "Enter the number of rows: ";
+    cin >> M;
+    cout << "Enter the number of columns: ";
+    cin >> N;
+
+    int** matrix = new int* [M];
+    for (int i = 0; i < M; i++)
+    {
+        matrix[i] = new int[N];
+    }
+
+    for (int i = 0; i < M; i++) 
+    {
+        for (int j = 0; j < N; j++)
+        {
+            matrix[i][j] = i * N + j + 1;
+        }
+    }
+
+    cout << "Original Matrix:" << endl;
+    printMatrix(matrix, M, N);
 
     int numShifts;
     string direction;
 
     cout << "Enter the number of shifts: ";
     cin >> numShifts;
-    cout << "Enter the direction (left/right): ";
+    cout << "Enter the direction (left/right/up/down): ";
     cin >> direction;
 
-    shiftRows(matrix, rows, cols, numShifts, direction);
-
-    cout << "Matrix after row shifting:" << endl;
-    for (int i = 0; i < rows; i++) {
-        for (int j = 0; j < cols; j++) {
-            cout << matrix[i][j] << " ";
-        }
-        cout << endl;
+    if (direction == "left" || direction == "right") 
+    {
+        shiftRows(matrix, M, N, numShifts, direction);
+    }
+    else if (direction == "up" || direction == "down") 
+    {
+        shiftColumns(matrix, M, N, numShifts, direction);
     }
 
-    // Deallocate memory for the matrix
-    for (int i = 0; i < rows; i++) {
+    cout << "Shifted Matrix:" << endl;
+    printMatrix(matrix, M, N);
+
+    for (int i = 0; i < M; i++) 
+    {
         delete[] matrix[i];
     }
     delete[] matrix;
