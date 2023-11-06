@@ -4,19 +4,24 @@
 using namespace std;
 
 template<typename T>
-void showPointer(T* p) {
+void showPointer(T* p) 
+{
     size_t size = _msize(p) / sizeof * p;
-    for (size_t i = 0; i < size; i++) {
+    for (size_t i = 0; i < size; i++) 
+    {
         cout << *p << ' ';
     }
     cout << endl;
 }
 
 template<typename T>
-void showArray(T** arr, size_t rows, size_t* cols) {
+void showArray(T** arr, size_t rows, size_t* cols)
+{
     cout << "Array dynamic: " << endl;
-    for (size_t i = 0; i < rows; i++) {
-        for (size_t j = 0; j < cols[i]; j++) {
+    for (size_t i = 0; i < rows; i++) 
+    {
+        for (size_t j = 0; j < cols[i]; j++) 
+        {
             cout << arr[i][j] << " ";
         }
         cout << endl;
@@ -25,21 +30,27 @@ void showArray(T** arr, size_t rows, size_t* cols) {
 }
 
 template<typename T>
-T** addNewColumn(T** arr, size_t rows, size_t* cols, size_t newColSize, size_t position) {
-    if (position < 0 || position > cols[0]) {
-        cout << "Invalid position. No column added." << endl;
+T** addNewColumn(T** arr, size_t rows, size_t* cols, size_t newColSize, size_t position) 
+{
+    if (position < 0 || position > cols[0]) 
+    {
+        cout << "Invalid position" << endl;
         return arr;
     }
 
     T** newArr = new T * [rows];
-    for (size_t i = 0; i < rows; i++) {
+    for (size_t i = 0; i < rows; i++) 
+    {
         newArr[i] = new T[cols[i] + 1];
-        for (size_t j = 0; j < cols[i] + 1; j++) {
-            if (j < position) {
+        for (size_t j = 0; j < cols[i] + 1; j++)
+        {
+            if (j < position) 
+            {
                 newArr[i][j] = arr[i][j];
             }
-            else if (j == position) {
-                newArr[i][j] = rand() % 10; // Add a random value
+            else if (j == position)
+            {
+                newArr[i][j] = rand() % 10; 
             }
             else {
                 newArr[i][j] = arr[i][j - 1];
@@ -48,7 +59,8 @@ T** addNewColumn(T** arr, size_t rows, size_t* cols, size_t newColSize, size_t p
         cols[i]++;
     }
 
-    for (size_t i = 0; i < rows; i++) {
+    for (size_t i = 0; i < rows; i++) 
+    {
         delete[] arr[i];
     }
     delete[] arr;
@@ -56,7 +68,8 @@ T** addNewColumn(T** arr, size_t rows, size_t* cols, size_t newColSize, size_t p
     return newArr;
 }
 
-int main() {
+int main()
+{
     srand(time(0));
     size_t items, rows;
     cout << "rows = ";
@@ -64,12 +77,14 @@ int main() {
     size_t* cols = new size_t[rows];
     int** arr = new int* [rows];
 
-    for (size_t i = 0; i < rows; i++) {
+    for (size_t i = 0; i < rows; i++)
+    {
         cout << "items[" << i << "] = ";
         cin >> items;
         cols[i] = items;
         arr[i] = new int[items];
-        for (size_t j = 0; j < items; j++) {
+        for (size_t j = 0; j < items; j++)
+        {
             arr[i][j] = rand() % 10;
         }
     }
@@ -86,7 +101,8 @@ int main() {
 
     showArray(arr, rows, cols);
 
-    for (size_t i = 0; i < rows; i++) {
+    for (size_t i = 0; i < rows; i++) 
+    {
         delete[] arr[i];
     }
     delete[] arr;
