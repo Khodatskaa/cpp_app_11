@@ -4,19 +4,24 @@
 using namespace std;
 
 template<typename T>
-void showPointer(T* p) {
+void showPointer(T* p) 
+{
     size_t size = _msize(p) / sizeof * p;
-    for (size_t i = 0; i < size; i++) {
+    for (size_t i = 0; i < size; i++) 
+    {
         cout << *p << ' ';
     }
     cout << endl;
 }
 
 template<typename T>
-void showArray(T** arr, size_t col, size_t* array_rows_size) {
+void showArray(T** arr, size_t col, size_t* array_rows_size) 
+{
     cout << "Array dynamic: " << endl;
-    for (size_t i = 0; i < col; i++) {
-        for (size_t j = 0; j < array_rows_size[i]; j++) {
+    for (size_t i = 0; i < col; i++) 
+    {
+        for (size_t j = 0; j < array_rows_size[i]; j++) 
+        {
             cout << arr[i][j] << " ";
         }
         cout << endl;
@@ -25,19 +30,23 @@ void showArray(T** arr, size_t col, size_t* array_rows_size) {
 }
 
 template<typename T>
-T** add_new_top_line(T** arr, int& col, size_t*& array_rows_size, size_t new_line_size) {
+T** add_new_top_line(T** arr, int& col, size_t*& array_rows_size, size_t new_line_size) 
+{
     size_t* new_array_rows_size = new size_t[col + 1];
-    for (size_t i = 0; i < col; i++) {
+    for (size_t i = 0; i < col; i++)
+    {
         new_array_rows_size[i + 1] = array_rows_size[i];
     }
     new_array_rows_size[0] = new_line_size;
     col++;
     T** new_arr = new T * [col];
     new_arr[0] = new T[new_line_size];
-    for (size_t i = 1; i < col; i++) {
+    for (size_t i = 1; i < col; i++) 
+    {
         new_arr[i] = arr[i - 1];
     }
-    for (size_t i = 0; i < new_line_size; i++) {
+    for (size_t i = 0; i < new_line_size; i++)
+    {
         new_arr[0][i] = rand() % 10;
     }
     delete[] arr;
@@ -47,19 +56,22 @@ T** add_new_top_line(T** arr, int& col, size_t*& array_rows_size, size_t new_lin
     return arr;
 }
 
-int main() {
+int main() 
+{
     srand(time(0));
     int items, rows;
     cout << "rows item = ";
     cin >> rows;
     size_t* array_rows_size = new size_t[rows];
     int** arr_d = new int* [rows];
-    for (size_t i = 0; i < rows; i++) {
+    for (size_t i = 0; i < rows; i++)
+    {
         cout << "items[" << i << "] = ";
         cin >> items;
         array_rows_size[i] = items;
         arr_d[i] = new int[items];
-        for (size_t j = 0; j < items; j++) {
+        for (size_t j = 0; j < items; j++)
+        {
             arr_d[i][j] = rand() % 10;
         }
     }
