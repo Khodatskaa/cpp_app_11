@@ -4,19 +4,24 @@
 using namespace std;
 
 template <typename T>
-void showPointer(T* p) {
+void showPointer(T* p) 
+{
     size_t size = _msize(p) / sizeof * p;
-    for (size_t i = 0; i < size; i++) {
+    for (size_t i = 0; i < size; i++)
+    {
         cout << *p << ' ';
     }
     cout << endl;
 }
 
 template <typename T>
-void showArray(T** arr, size_t rows, size_t* cols) {
+void showArray(T** arr, size_t rows, size_t* cols) 
+{
     cout << "Array dynamic: " << endl;
-    for (size_t i = 0; i < rows; i++) {
-        for (size_t j = 0; j < cols[i]; j++) {
+    for (size_t i = 0; i < rows; i++) 
+    {
+        for (size_t j = 0; j < cols[i]; j++) 
+        {
             cout << arr[i][j] << " ";
         }
         cout << endl;
@@ -25,18 +30,23 @@ void showArray(T** arr, size_t rows, size_t* cols) {
 }
 
 template <typename T>
-T** deleteColumn(T** arr, size_t rows, size_t*& cols, size_t columnNumber) {
-    if (columnNumber < 0 || columnNumber >= cols[0]) {
-        cout << "Invalid column number. No column deleted." << endl;
+T** deleteColumn(T** arr, size_t rows, size_t*& cols, size_t columnNumber)
+{
+    if (columnNumber < 0 || columnNumber >= cols[0]) 
+    {
+        cout << "Invalid column number" << endl;
         return arr;
     }
 
     T** newArr = new T * [rows];
-    for (size_t i = 0; i < rows; i++) {
+    for (size_t i = 0; i < rows; i++) 
+    {
         newArr[i] = new T[cols[i] - 1];
-        for (size_t j = 0, k = 0; j < cols[i]; j++) {
-            if (j == columnNumber) {
-                continue;  // Skip the column to be deleted
+        for (size_t j = 0, k = 0; j < cols[i]; j++) 
+        {
+            if (j == columnNumber) 
+            {
+                continue; 
             }
             newArr[i][k] = arr[i][j];
             k++;
@@ -44,7 +54,8 @@ T** deleteColumn(T** arr, size_t rows, size_t*& cols, size_t columnNumber) {
         cols[i]--;
     }
 
-    for (size_t i = 0; i < rows; i++) {
+    for (size_t i = 0; i < rows; i++) 
+    {
         delete[] arr[i];
     }
     delete[] arr;
@@ -52,7 +63,8 @@ T** deleteColumn(T** arr, size_t rows, size_t*& cols, size_t columnNumber) {
     return newArr;
 }
 
-int main() {
+int main() 
+{
     srand(time(0));
     size_t items, rows;
     cout << "rows = ";
@@ -60,12 +72,14 @@ int main() {
     size_t* cols = new size_t[rows];
     int** arr = new int* [rows];
 
-    for (size_t i = 0; i < rows; i++) {
+    for (size_t i = 0; i < rows; i++) 
+    {
         cout << "items[" << i << "] = ";
         cin >> items;
         cols[i] = items;
         arr[i] = new int[items];
-        for (size_t j = 0; j < items; j++) {
+        for (size_t j = 0; j < items; j++)
+        {
             arr[i][j] = rand() % 10;
         }
     }
@@ -82,7 +96,8 @@ int main() {
 
     showArray(arr, rows, cols);
 
-    for (size_t i = 0; i < rows; i++) {
+    for (size_t i = 0; i < rows; i++) 
+    {
         delete[] arr[i];
     }
     delete[] arr;
