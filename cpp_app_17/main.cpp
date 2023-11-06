@@ -53,7 +53,8 @@ T** addNewLine(T** arr, int& col, size_t*& arrayRowsSize, size_t newLineSize, in
         {
             newArr[i] = arr[i];
         }
-        else if (i == position) {
+        else if (i == position)
+        {
             newArr[i] = new T[newLineSize];
             for (size_t j = 0; j < newLineSize; j++) 
             {
